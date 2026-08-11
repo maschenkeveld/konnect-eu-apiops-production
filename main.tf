@@ -138,6 +138,24 @@ resource "konnect_portal_customization" "apiops_production_portal" {
   }
 }
 
+resource "konnect_portal_page" "apiops_production_portal_overview" {
+  provider  = konnect-beta
+  portal_id = konnect_portal.apiops_production_portal.id
+
+  slug       = "overview"
+  title      = "Overview"
+  status     = "published"
+  visibility = "public"
+
+  content = <<-EOT
+    # APIOps Developer Portal
+
+    Welcome to the developer portal for APIs running on the production control
+    plane. Browse the API Catalog to explore available APIs, view their specs,
+    and register applications.
+  EOT
+}
+
 output "portal_id" {
   value = konnect_portal.apiops_production_portal.id
 }
