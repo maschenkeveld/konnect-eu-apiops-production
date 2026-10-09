@@ -40,7 +40,7 @@ provider "vault" {
 }
 
 resource "konnect_gateway_control_plane" "apiops_production_gateway_control_plane" {
-  name          = "apiops-production"
+  name          = "production"
   cluster_type  = "CLUSTER_TYPE_CONTROL_PLANE"
   cloud_gateway = false
   auth_type     = "pki_client_certs"
@@ -72,7 +72,7 @@ locals {
     control_plane_endpoint = format("%s:443", replace(konnect_gateway_control_plane.apiops_production_gateway_control_plane.config.control_plane_endpoint, "https://", ""))
     telemetry_endpoint     = format("%s:443", replace(konnect_gateway_control_plane.apiops_production_gateway_control_plane.config.telemetry_endpoint, "https://", ""))
 
-    # Portal coordinates — consumed by the APIOps pipeline (optional OpenBao read) and available to ESO.
+    # Portal coordinates — consumed by the pipeline (optional OpenBao read) and available to ESO.
     portal_id             = konnect_portal.apiops_production_portal.id
     portal_default_domain = konnect_portal.apiops_production_portal.default_domain
   }
@@ -81,7 +81,7 @@ locals {
 # Write to OpenBao (for ESO + optional pipeline read). Toggle with var.write_to_openbao.
 resource "vault_generic_secret" "konnect_endpoints" {
   count     = var.write_to_openbao ? 1 : 0
-  path      = "kv/konnect/konnect-eu-apiops-production/connection-details"
+  path      = "kv/konnect/konnect-eu-production/connection-details"
   data_json = jsonencode(local.connection_details)
 }
 
@@ -94,13 +94,13 @@ resource "local_file" "connection_details" {
 
 # --- Production Portal (new / beta portals) --------------------------------
 # The production Dev Portal. Grab its ID with `terraform output portal_id` and store it as the
-# APIOps KONNECT_PORTAL_ID GitHub variable (the release pipeline publishes here).
+# KONNECT_PORTAL_ID GitHub variable (the release pipeline publishes here).
 # Schema is for kong/konnect-beta v0.11.2 — re-check with `terraform plan` if bumped.
 resource "konnect_portal" "apiops_production_portal" {
   provider = konnect-beta
 
-  name         = "apiops-production-portal"
-  display_name = "APIOps Production Portal"
+  name         = "production-portal"
+  display_name = "Production Portal"
   description  = "Production portal for APIs on the production control plane"
 
   authentication_enabled    = false

@@ -1,0 +1,7 @@
+# Use source ./export-secrets.sh
+export MPW=haqxDpyly6iSmLrgNpDt
+export HCV_ROOT_TOKEN=s.Vvu0Ox4vu46iYKtsyEqqecyw
+export KPAT=kpat_sFxBPCEAEuhCNoEdukNcsAtSKgoA5f3MeXoaZkFIqV0w1r86p
+export TF_VAR_MPW=haqxDpyly6iSmLrgNpDt
+export TF_VAR_HCV_ROOT_TOKEN=s.Vvu0Ox4vu46iYKtsyEqqecyw
+export TF_VAR_KPAT=kpat_sFxBPCEAEuhCNoEdukNcsAtSKgoA5f3MeXoaZkFIqV0w1r86p
